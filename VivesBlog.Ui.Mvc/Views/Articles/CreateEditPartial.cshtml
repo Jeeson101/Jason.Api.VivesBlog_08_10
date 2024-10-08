@@ -1,7 +1,7 @@
-﻿@model Article
+﻿@model ArticleResult
 
 @{
-    var authors = (IList<Person>)ViewBag.Authors;
+    var authors = (IList<PersonResult>)ViewBag.Authors;
 }
 
 <div asp-validation-summary="ModelOnly"></div>

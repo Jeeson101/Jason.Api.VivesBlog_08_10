@@ -1,16 +1,15 @@
-﻿@model Article
+﻿@model ArticleResult
 
 <tr>
     <td>@Model.PublishedDate.ToShortDateString() @Model.PublishedDate.ToShortTimeString()</td>
     <td>
-        @if (Model.Author is null)
+        @if (Model.AuthorName is null)
         {
             @: No author
         }
         else
         {
-            @Model.Author.FirstName
-            @Model.Author.LastName
+            @Model.AuthorName
         }
     </td>
     <td>@Model.Title</td>

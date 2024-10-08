@@ -1,64 +1,73 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VivesBlog.Model;
-using VivesBlog.Services;
+using VivesBlog.Dto.Request;
+using VivesBlog.Dto.Result;
+using VivesBlog.Sdk;
 
 namespace VivesBlog.Ui.Mvc.Controllers
 {
     [Authorize]
     public class ArticlesController : Controller
     {
-        private readonly ArticleService _articleService;
-        private readonly PersonService _personService;
+        private readonly ArticleSdk _articleService;
+        private readonly PersonSdk _personService;
 
         public ArticlesController(
-            ArticleService articleService,
-            PersonService personService)
+            ArticleSdk articleService,
+            PersonSdk personService)
         {
             _articleService = articleService;
             _personService = personService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var articles = _articleService.Find();
+            var articles = await _articleService.Find();
             return View(articles);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return CreateEditView();
+            return await CreateEditView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Article article)
+        public async Task<IActionResult> Create(ArticleRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return CreateEditView(article);
-            }
+	            var article = new ArticleResult
+	            {
+					Title = request.Title,
+					Description = request.Description,
+					Content = request.Content,
+					AuthorId = request.AuthorId
+				};
 
-            _articleService.Create(article);
+	            return await CreateEditView(request);
+			}
+
+            await _articleService.Create(request);
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit([FromRoute] int id)
+        public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            var article = _articleService.Get(id);
+            var article = await _articleService.Get(id);
 
             if (article is null)
             {
                 return RedirectToAction("Index");
             }
 
-            return CreateEditView(article);
+            return await CreateEditView(article);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute] int id, [FromForm] Article article)
+        public IActionResult Edit([FromRoute] int id, [FromForm] ArticleRequest article)
         {
             if (!ModelState.IsValid)
             {
@@ -79,12 +88,12 @@ namespace VivesBlog.Ui.Mvc.Controllers
         }
 
 
-        private IActionResult CreateEditView(Article? article = null)
+        private async Task<IActionResult> CreateEditView(ArticleResult? request = null)
         {
-            var authors = _personService.Find();
+            var authors = await _personService.Find();
             ViewBag.Authors = authors;
 
-            return View(article);
+            return View(request);
         }
     }
 }

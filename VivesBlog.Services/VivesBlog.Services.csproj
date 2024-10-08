@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vives.Services.Model\Vives.Services.Model.csproj" />
     <ProjectReference Include="..\VivesBlog.Core\VivesBlog.Core.csproj" />
+    <ProjectReference Include="..\VivesBlog.Dto\VivesBlog.Dto.csproj" />
   </ItemGroup>
 
 </Project>
