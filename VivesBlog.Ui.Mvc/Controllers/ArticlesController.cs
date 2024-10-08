@@ -27,7 +27,7 @@ namespace VivesBlog.Ui.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-	        return await CreateEditView((ArticleRequest?)null);
+	        return await CreateEditView();
         }
 
 		[HttpPost]
@@ -55,45 +55,49 @@ namespace VivesBlog.Ui.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-	        var articleResult = await _articleService.Get(id);
+	        var result = await _articleService.Get(id);
 
-	        if (articleResult?.Data is null)
+	        if (result?.Data is null)
 	        {
 		        return RedirectToAction("Index");
 	        }
 
-	        return await CreateEditView(articleResult.Data);
+	        return await CreateEditView(result.Data);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] ArticleRequest article)
+        public async Task<IActionResult> Edit([FromRoute] int id, [FromForm] ArticleRequest request)
         {
-	        if (!ModelState.IsValid)
-	        {
-		        return await CreateEditView(article);
-	        }
 
-	        await _articleService.Update(id, article);
+			if (!ModelState.IsValid)
+	        {
+		        var result = await _articleService.Get(id);
+
+		        if (!result.IsSuccess || result.Data is null)
+		        {
+					return RedirectToAction("Index");
+				}
+
+		        var article = result.Data;
+		        article.Title = request.Title;
+		        article.Description = request.Description;
+
+				return await CreateEditView(article);
+
+			}
+
+			await _articleService.Update(id, request);
 
 	        return RedirectToAction("Index");
         }
 
 
 		[HttpPost("/[controller]/Delete/{id:int?}"), ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _articleService.Delete(id);
+            await _articleService.Delete(id);
 
             return RedirectToAction("Index");
-        }
-
-
-        private async Task<IActionResult> CreateEditView(ArticleRequest? request = null)
-        {
-	        var authors = await _personService.Find();
-	        ViewBag.Authors = authors;
-
-	        return View(request);
         }
 
         private async Task<IActionResult> CreateEditView(ArticleResult? result = null)
