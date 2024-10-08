@@ -7,9 +7,14 @@ using VivesBlog.Dto.Result;
 
 namespace VivesBlog.Sdk
 {
-	public class ArticleSdk(IHttpClientFactory httpClientFactory)
+	public class ArticleSdk
 	{
-		private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+		private readonly IHttpClientFactory _httpClientFactory;
+
+		public ArticleSdk(IHttpClientFactory httpClientFactory)
+		{
+			_httpClientFactory = httpClientFactory;
+		}
 
 		//Find
 		public async Task<IList<ArticleResult>> Find()
@@ -29,6 +34,8 @@ namespace VivesBlog.Sdk
 
 			return result;
 		}
+
+
 
 		//Get
 		public async Task<ServiceResult<ArticleResult>> Get(int id)

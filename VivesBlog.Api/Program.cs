@@ -32,10 +32,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 
 	using var scope = app.Services.CreateScope();
-	var peopleManagerDbContext = scope.ServiceProvider.GetRequiredService<VivesBlogDbContext>();
-	if (peopleManagerDbContext.Database.IsInMemory())
+	var vivesBlogDbContext = scope.ServiceProvider.GetRequiredService<VivesBlogDbContext>();
+	if (vivesBlogDbContext.Database.IsInMemory())
 	{
-		peopleManagerDbContext.Seed();
+		vivesBlogDbContext.Seed();
 	}
 }
 

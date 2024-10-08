@@ -6,7 +6,7 @@ using VivesBlog.Sdk;
 
 namespace VivesBlog.Ui.Mvc.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PeopleController : Controller
     {
         private readonly PersonSdk _personService;
@@ -25,7 +25,7 @@ namespace VivesBlog.Ui.Mvc.Controllers
         }
 
         [HttpGet]
-        public Task<IActionResult> Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -56,7 +56,7 @@ namespace VivesBlog.Ui.Mvc.Controllers
         {
             var response = await _personService.Get(id);
 
-            if (response.IsSuccess || response.Data is null)
+            if (!response.IsSuccess || response.Data is null)
             {
 	            return RedirectToAction("Index");
             }

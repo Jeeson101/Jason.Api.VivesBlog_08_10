@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VivesBlog.Dto\VivesBlog.Dto.csproj" />
     <ProjectReference Include="..\VivesBlog.Services\VivesBlog.Services.csproj" />
   </ItemGroup>
 

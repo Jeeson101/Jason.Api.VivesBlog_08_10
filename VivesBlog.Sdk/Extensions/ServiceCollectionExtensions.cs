@@ -6,7 +6,7 @@ namespace VivesBlog.Sdk.Extensions
 	{
 		public static IServiceCollection AddApi(this IServiceCollection services, string apiUrl)
 		{
-			services.AddHttpClient("PeopleManagerApi", options =>
+			services.AddHttpClient("VivesBlogApi", options =>
 			{
 				options.BaseAddress = new Uri(apiUrl);
 			});
