@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VivesBlog.Dto.Request;
 using VivesBlog.Services;
+using VivesBlog.Services.Interfaces;
 
 namespace VivesBlog.Api.Controllers
 {
@@ -9,9 +10,9 @@ namespace VivesBlog.Api.Controllers
 	[ApiController]
 	public class ArticleController : ControllerBase
 	{
-		private readonly ArticleService _articleService;
+		private readonly IArticleService _articleService;
 
-		public ArticleController(ArticleService articleService)
+		public ArticleController(IArticleService articleService)
 		{
 			_articleService = articleService;
 		}

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VivesBlog.Dto.Request;
 using VivesBlog.Model;
 using VivesBlog.Services;
+using VivesBlog.Services.Interfaces;
 
 namespace VivesBlog.Api.Controllers
 {
@@ -10,9 +11,9 @@ namespace VivesBlog.Api.Controllers
 	[ApiController]
 	public class PersonController : ControllerBase
 	{
-		private readonly PersonService _personService;
+		private readonly IPersonService _personService;
 
-		public PersonController(PersonService personService)
+		public PersonController(IPersonService personService)
 		{
 			_personService = personService;
 		}

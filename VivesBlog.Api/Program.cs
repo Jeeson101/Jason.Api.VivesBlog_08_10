@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using VivesBlog.Core;
 using VivesBlog.Services;
+using VivesBlog.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -13,15 +12,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<VivesBlogDbContext>(options =>
 {
-	//options.UseLoggerFactory(consoleLoggerFactory);
-	//options.EnableSensitiveDataLogging();
-	//options.UseSqlServer(connectionString);
 	options.UseInMemoryDatabase(nameof(VivesBlogDbContext));
 });
 
 
-builder.Services.AddScoped<ArticleService>();
-builder.Services.AddScoped<PersonService>();
+builder.Services.AddScoped<IArticleService ,ArticleService>();
+builder.Services.AddScoped<IPersonService ,PersonService>();
 
 var app = builder.Build();
 

@@ -10,22 +10,6 @@ var apiSettings = new ApiSettings();
 builder.Configuration.GetSection(nameof(ApiSettings)).Bind(apiSettings);
 builder.Services.AddApi(apiSettings.BaseUrl);
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-//{
-//    options.Password.RequireDigit = true;
-//    options.Password.RequireLowercase = true;
-//    options.Password.RequireUppercase = true;
-//    options.Password.RequiredLength = 8;
-//}).AddEntityFrameworkStores<VivesBlogDbContext>();
-
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.Cookie.HttpOnly = true;
-//    options.LoginPath = "/Account/SignIn";
-//    options.AccessDeniedPath = "/Account/SignIn";
-//});
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

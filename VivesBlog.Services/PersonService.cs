@@ -6,10 +6,11 @@ using VivesBlog.Dto.Request;
 using VivesBlog.Dto.Result;
 using VivesBlog.Model;
 using VivesBlog.Services.Extensions;
+using VivesBlog.Services.Interfaces;
 
 namespace VivesBlog.Services
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private readonly VivesBlogDbContext _dbContext;
 

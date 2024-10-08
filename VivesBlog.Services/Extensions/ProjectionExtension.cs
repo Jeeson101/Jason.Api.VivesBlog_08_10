@@ -12,7 +12,8 @@ namespace VivesBlog.Services.Extensions
 				Id = o.Id,
 				Title = o.Title,
 				AuthorId = o.AuthorId,
-				AuthorName = o.Author.FirstName,
+				AuthorName = o.Author != null ? o.Author.FirstName + " " + o.Author.LastName : string.Empty,
+				PublishedDate = o.PublishedDate,
 				Description = o.Description,
 				Content = o.Content
 			});
