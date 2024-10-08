@@ -6,7 +6,6 @@ using VivesBlog.Sdk;
 
 namespace VivesBlog.Ui.Mvc.Controllers
 {
-    //[Authorize]
     public class PeopleController : Controller
     {
         private readonly PersonSdk _personService;

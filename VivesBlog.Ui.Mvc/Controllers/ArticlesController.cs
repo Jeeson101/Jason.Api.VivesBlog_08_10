@@ -5,9 +5,8 @@ using VivesBlog.Dto.Result;
 using VivesBlog.Sdk;
 
 namespace VivesBlog.Ui.Mvc.Controllers
-{
-    //[Authorize]
-    public class ArticlesController : Controller
+{ 
+	public class ArticlesController : Controller
     {
         private readonly ArticleSdk _articleService;
         private readonly PersonSdk _personService;
